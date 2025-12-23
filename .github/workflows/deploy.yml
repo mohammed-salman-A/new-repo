@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - run: docker build . -t salman0alji/new-app
+      - run: docker build . -t salman0alji/new-app:latest
       - run: echo ${{secrets.DOKERHUB_TOKEN}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
-      - run: docker push salman0alji/new-app
+      - run: docker push salman0alji/new-app:latest
 
