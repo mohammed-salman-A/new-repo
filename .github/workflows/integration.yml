@@ -3,44 +3,24 @@ name: integration
 on:
   push:
     branches: [ "master" ]
-  pull_request:
+  pull-request:
     branches: [ "master" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: 
-        node-version: [18.x, 20.x, 22.x]
-
-    
-    steps:
-      - uses: actions/checkout@v3
-      - name: use node.js ${{matrix.node-version}}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{matrix.node-version}}
-          cache: 'npm'
-      - name: "installing dependencies"
-        run: npm ci
-      - name: "building nodejs app"
-        run: npm run build    
-  
   unit-test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix: 
-        node-version: [18.x,20.x,22.x] 
-
-    
+        node-version: [ 20.x, 22.x, 24.x ]
     steps:
-      - uses: actions/checkout@v3
-      - name: use node.js ${{matrix.node-version}}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/node-setup@v4
         with:
           node-version: ${{matrix.node-version}}
           cache: 'npm'
-      - name: "installing dependencies" 
+        
+      - name: installing dependencies
         run: npm ci
-      - name: "runnign test cases"
+      - name: running test cases
         run: npm run test
